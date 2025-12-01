@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="">
+                    <a class="sidebar-link {{ request()->is('hasilchecklist*') ? 'active' : '' }}" href="{{ route('hasilchecklist.index') }}">
                         <iconify-icon
                             icon="solar:checklist-minimalistic-linear"
                             class="aside-icon"

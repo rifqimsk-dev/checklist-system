@@ -28,16 +28,15 @@
 
                 <form id="multiStepForm" action="{{ route('isichecklist.store') }}" method="POST">
                     @csrf
-                    {{-- ALERT ERROR --}}
-                    <div id="global-error" 
-                        class="alert customize-alert alert-dismissible rounded-pill alert-light-danger bg-danger-subtle text-danger fade show remove-close-icon"
-                        role="alert"
-                        style="display:none;"
-                    >
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        <div class="d-flex align-items-center me-3 me-md-0">
-                            <i class="ti ti-info-circle fs-5 me-2 text-danger"></i>
-                            Silakan pilih salah satu opsi.
+
+                    <div class="row mb-4">
+                        <div class="form-group col-md-6">
+                            <label for="nama">Nama</label>
+                            <input type="text" name="nama" id="nama"  class="form-control" style="border:1px solid #e0e0e0">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="hondaID">Honda ID</label>
+                            <input type="text" name="hondaID" id="hondaID"  class="form-control" style="border:1px solid #e0e0e0">
                         </div>
                     </div>
 
@@ -46,6 +45,18 @@
                     <div class="step @if($loop->first) active @endif">
                         
                         <h5 class="mb-3 fw-semibold">{{ $row->pertanyaan }}</h5>
+                        {{-- ALERT ERROR --}}
+                        <div id="global-error" 
+                            class="alert customize-alert alert-dismissible rounded-pill alert-light-danger bg-danger-subtle text-danger fade show remove-close-icon"
+                            role="alert"
+                            style="display:none;"
+                        >
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            <div class="d-flex align-items-center me-3 me-md-0">
+                                <i class="ti ti-info-circle fs-5 me-2 text-danger"></i>
+                                Silakan pilih salah satu opsi.
+                            </div>
+                        </div>
 
                         {{-- simpan id pertanyaan --}}
                         <input type="hidden" name="pertanyaan[]" value="{{ $row->pertanyaan }}">

@@ -32,15 +32,20 @@ class IsiChecklistController extends Controller
      */
     public function store(Request $request)
     {
+        $nama       = $request->nama;
+        $hondaID    = $request->hondaID;
+
         $pertanyaan = $request->pertanyaan;
-        $indikator = $request->indikator;
+        $indikator  = $request->indikator;
         $keterangan = $request->keterangan;
 
         foreach ($pertanyaan as $index => $p) {
             IsiChecklist::create([
                 'user_id'       => auth()->id(),
-                'pertanyaan' => $p,
-                'indikator'       => $indikator[$index],
+                'nama'          => $nama,
+                'hondaID'       => $hondaID,
+                'pertanyaan'    => $p,
+                'indikator'     => $indikator[$index],
                 'keterangan'    => $keterangan[$index],
             ]);
         }

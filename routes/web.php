@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormChecklistController;
+use App\Http\Controllers\HasilChecklist;
 use App\Http\Controllers\IsiChecklistController;
 use App\Http\Controllers\UserChecklistController;
 
@@ -30,6 +31,9 @@ Route::resource('formchecklist', FormChecklistController::class)
 ->middleware('role:admin,auditor');
 
 Route::resource('isichecklist', IsiChecklistController::class)
+->middleware('role:admin,auditor');
+
+Route::resource('hasilchecklist', HasilChecklist::class)
 ->middleware('role:admin,auditor');
 
 Route::resource('akun', AkunController::class)
