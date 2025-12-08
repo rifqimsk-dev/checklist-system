@@ -33,8 +33,13 @@ Route::resource('formchecklist', FormChecklistController::class)
 Route::resource('isichecklist', IsiChecklistController::class)
 ->middleware('role:admin,auditor');
 
-Route::resource('hasilchecklist', HasilChecklist::class)
-->middleware('role:admin,auditor');
+Route::get('/hasilchecklist', [HasilChecklist::class, 'index'])
+->middleware('role:admin,auditor')
+->name('hasilchecklist.index');
+
+Route::get('/hasilchecklist/view', [HasilChecklist::class, 'view'])
+->middleware('role:admin,auditor')
+->name('hasilchecklist.view');
 
 Route::resource('akun', AkunController::class)
 ->middleware('role:admin');

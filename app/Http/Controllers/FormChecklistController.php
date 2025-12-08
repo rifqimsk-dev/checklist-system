@@ -23,7 +23,7 @@ class FormChecklistController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

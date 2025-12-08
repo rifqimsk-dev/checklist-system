@@ -2,7 +2,7 @@
 @section('content')
 
 <style>
-    table, tbody, thead, tr, th, td {
+    table, tbody, thead, tfoot, tr, th, td {
         border: 1px solid #cfcfcf !important;
     }
 </style>
@@ -18,6 +18,47 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Hasil Checklist</h4>
+                            <form action="{{ route('hasilchecklist.view') }}" method="get">
+                                <div class="row">
+                                    <div class="form-group mb-2 col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="bulan"><i class="ti ti-calendar"></i></span>
+                                            <select name="bulan" class="form-control">
+                                                <option value="01">Januari</option>
+                                                <option value="02">Februari</option>
+                                                <option value="03">Maret</option>
+                                                <option value="04">April</option>
+                                                <option value="05">Mei</option>
+                                                <option value="06">Juni</option>
+                                                <option value="07">Juli</option>
+                                                <option value="08">Agustus</option>
+                                                <option value="09">September</option>
+                                                <option value="10">Oktober</option>
+                                                <option value="11">November</option>
+                                                <option value="12">Desember</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2 col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="dealer"><i class="ti ti-building"></i></span>
+                                            <select name="dealer" class="form-control">
+                                                <option value="" disabled selected>Pilih Dealer</option>
+                                                <option value="MPS Pandeglang">MPS Pandeglang</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2 col-md-1">
+                                        <button class="btn btn-danger rounded-2"><i class="ti ti-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            @if ($hasil->isNotEmpty())
+                            <b><span class="ti ti-building"></span> MPS Pandeglang</b>
                             <div class="table-responsive mt-3">
                                 <div class="row mb-1">
                                     <div class="col-md-6">
@@ -65,6 +106,15 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="2"></th>
+                                            <th class="text-center">{{ $count_1 = $hasil->where('indikator', 1)->count() }}</th>
+                                            <th class="text-center">{{ $hasil->where('indikator', 2)->count() }}</th>
+                                            <th class="text-center">{{ $hasil->where('indikator', 3)->count() }}</th>
+                                            <th class="text-center">{{ round($count_1 * 100 / $hasil->count())  }}%</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                                 <div class="mt-3">
                                     <h5>Keterangan</h5>
@@ -79,6 +129,12 @@
                                     </div>
                                 </div>
                             </div>
+                            @else 
+                            <div class="text-center">
+                                <img src="{{ asset('assets/icons/empty_search.svg') }}" width="200" alt="Empty Search">
+                                <h4>Data tidak ditemukan</h4>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <!-- end Zero Configuration -->

@@ -12,11 +12,38 @@ class IsiChecklistController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Isi Checklist';
-        $form_checklist = FormChecklist::where('user_id', Auth::id())->get();
-        return view('checklist.isi', compact('title','form_checklist'));
+
+        $bulan = $request->query('bulan');
+        $dealer = $request->query('dealer');
+
+        if (!$bulan || !$dealer) {
+            return redirect()->route('isichecklist.create');
+        }
+
+        $query = IsiChecklist::where('user_id', auth()->id())
+        ->where('bulan', $bulan)
+        ->where('dealer', $dealer);
+
+        $exists = $query->exists();
+
+        if ($exists) {
+            return redirect()->back()->with('alert', [
+            'title' => 'Data sudah ada!',
+            'message' => 'Data checklist pada bulan dan dealer yang Anda pilih sudah ada',
+            'type' => 'warning'
+        ]);
+        } else {
+            session([
+                'bulan' => $bulan,
+                'dealer' => $dealer,
+            ]);
+            $form_checklist = FormChecklist::where('user_id', Auth::id())->get();
+            return view('checklist.isi', compact('title','form_checklist'));
+        }
+
     }
 
     /**
@@ -24,7 +51,8 @@ class IsiChecklistController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Isi Checklist';
+        return view('checklist.formisi', compact('title'));
     }
 
     /**
@@ -34,6 +62,8 @@ class IsiChecklistController extends Controller
     {
         $nama       = $request->nama;
         $hondaID    = $request->hondaID;
+        $dealer    = session('dealer');
+        $bulan    = session('bulan');
 
         $pertanyaan = $request->pertanyaan;
         $indikator  = $request->indikator;
@@ -47,6 +77,8 @@ class IsiChecklistController extends Controller
                 'pertanyaan'    => $p,
                 'indikator'     => $indikator[$index],
                 'keterangan'    => $keterangan[$index],
+                'dealer'        => $dealer,
+                'bulan'        => $bulan,
             ]);
         }
 

@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link {{ request()->is('isichecklist*') ? 'active' : '' }}" href="{{ route('isichecklist.index') }}">
+                    <a class="sidebar-link {{ request()->is('isichecklist*') ? 'active' : '' }}" href="{{ route('isichecklist.create') }}">
                         <iconify-icon
                             icon="solar:document-add-linear"
                             class="aside-icon"

@@ -23,6 +23,12 @@
 
                 <!-- Progress -->
                 <div class="mb-4 text-center">
+                    <h4>
+                        <i class="ti ti-building"></i> 
+                        {{ session('dealer') }} - 
+                        <i class="ti ti-calendar"></i> 
+                        {{ \Carbon\Carbon::create()->month(session('bulan'))->locale('id')->translatedFormat('F') }}
+                    </h4>
                     <span id="progress-text" class="fw-bold"></span>
                 </div>
 
@@ -30,13 +36,17 @@
                     @csrf
 
                     <div class="row mb-4">
-                        <div class="form-group col-md-6">
-                            <label for="nama">Nama</label>
-                            <input type="text" name="nama" id="nama"  class="form-control" style="border:1px solid #e0e0e0">
+                        <div class="form-group col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text" id="bulan">Nama</span>
+                                <input type="text" name="nama" id="nama"  class="form-control" style="border:1px solid #e0e0e0">
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="hondaID">Honda ID</label>
-                            <input type="text" name="hondaID" id="hondaID"  class="form-control" style="border:1px solid #e0e0e0">
+                        <div class="form-group col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text" id="bulan">Honda ID</span>
+                                <input type="text" name="hondaID" id="hondaID"  class="form-control" style="border:1px solid #e0e0e0">
+                            </div>
                         </div>
                     </div>
 
@@ -63,19 +73,19 @@
 
                         {{-- RADIO --}}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" 
+                            <input class="form-check-input danger" type="radio" 
                                 name="indikator[{{ $loop->index }}]" value="1">
                             <label class="form-check-label">Paham</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" 
+                            <input class="form-check-input danger" type="radio" 
                                 name="indikator[{{ $loop->index }}]" value="2">
                             <label class="form-check-label">Tidak Paham</label>
                         </div>
 
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="radio" 
+                            <input class="form-check-input danger" type="radio" 
                                 name="indikator[{{ $loop->index }}]" value="3">
                             <label class="form-check-label">Tidak Dipakai</label>
                         </div>
