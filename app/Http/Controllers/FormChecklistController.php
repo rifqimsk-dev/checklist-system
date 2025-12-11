@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FormChecklist;
+use App\Models\UserChecklist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,11 +12,20 @@ class FormChecklistController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Form Checklist';
-        $form_checklist = FormChecklist::where('user_id', Auth::id())->get();
-        return view('checklist.form', compact('title','form_checklist'));
+        if ($request->id) {
+            session(['form_checklist_id' => $request->id]);
+            return redirect()->route('formchecklist.index');
+        }
+
+        $user_checklist = UserChecklist::find(session('form_checklist_id'));
+        $form_checklist = FormChecklist::where('user_id', Auth::id())
+        ->where('user_checklist_id', session('form_checklist_id'))
+        ->get();
+
+        return view('checklist.form', compact('title','form_checklist','user_checklist'));
     }
 
     /**
@@ -37,7 +47,8 @@ class FormChecklistController extends Controller
 
         FormChecklist::create([
             'pertanyaan' => $request->pertanyaan,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'user_checklist_id' => session('form_checklist_id')
         ]);
 
         return redirect()->route('formchecklist.index')->with('alert', [

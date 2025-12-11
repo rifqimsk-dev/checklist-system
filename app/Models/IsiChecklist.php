@@ -10,5 +10,5 @@ class IsiChecklist extends Model
     use HasFactory;
 
     protected $table = 'isi_checklist';
-    protected $fillable = ['user_id','nama','hondaID','pertanyaan','indikator','keterangan','dealer','bulan'];
+    protected $fillable = ['user_id','nama','hondaID','pertanyaan','indikator','keterangan','dealer','bulan','user_checklist_id'];
 }

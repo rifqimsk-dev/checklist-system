@@ -11,9 +11,9 @@
                     <!-- start Zero Configuration -->
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Form Checklist - {{ $user_checklist->nama }}</h4>
+                            <h4 class="card-title">Data Dealer</h4>
                             <a href="" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-outline-danger mt-2">
-                                <i class="ti ti-plus"></i> Tambah Pertanyaan
+                                <i class="ti ti-plus"></i> Tambah Dealer
                             </a>
                             <div class="table-responsive mt-3">
                                 <table
@@ -24,16 +24,18 @@
                                         <!-- start row -->
                                         <tr>
                                             <th width="1">No</th>
-                                            <th>Pertanyaan</th>
+                                            <th>Kode</th>
+                                            <th>Nama</th>
                                             <th>Opsi</th>
                                         </tr>
                                         <!-- end row -->
                                     </thead>
                                     <tbody>
-                                        @foreach ($form_checklist as $row)
+                                        @foreach ($dealer as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->pertanyaan }}</td>
+                                            <td>{{ $row->kode }}</td>
+                                            <td>{{ $row->nama }}</td>
                                             <td>
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#ubah{{ $row->id }}" class="btn btn-sm btn-dark rounded-circle"><i class="ti ti-search"></i></a>
 
@@ -42,24 +44,39 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex align-items-center">
                                                                 <h4 class="modal-title" id="myModalLabel">
-                                                                    Ubah Pertanyaan
+                                                                    Ubah Dealer
                                                                 </h4>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form action="{{ route('formchecklist.update', $row->id) }}" method="POST" class="floating-labels">
+                                                            <form action="{{ route('dealer.update', $row->id) }}" method="POST" class="floating-labels">
                                                                 <div class="modal-body">
                                                                     @csrf
                                                                     @method('PUT')
                                                                     <div class="form-group mb-4">
                                                                         <input
                                                                             type="text"
-                                                                            name="pertanyaan"
-                                                                            value="{{ @old('pertanyaan', $row->pertanyaan) }}"
-                                                                            class="form-control @error('pertanyaan') is-invalid @enderror"
-                                                                            id="pertanyaan"
+                                                                            name="kode"
+                                                                            value="{{ @old('kode', $row->kode) }}"
+                                                                            class="form-control @error('kode') is-invalid @enderror"
+                                                                            id="kode"
                                                                         />
                                                                         <span class="bar"></span>
-                                                                        @error('pertanyaan')
+                                                                        <label for="nama">Masukkan Kode Dealer</label>
+                                                                        @error('kode')
+                                                                            <span class="invalid-feedback">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="form-group mb-4">
+                                                                        <input
+                                                                            type="text"
+                                                                            name="nama"
+                                                                            value="{{ @old('nama', $row->nama) }}"
+                                                                            class="form-control @error('nama') is-invalid @enderror"
+                                                                            id="nama"
+                                                                        />
+                                                                        <span class="bar"></span>
+                                                                        <label for="nama">Masukkan Nama Dealer</label>
+                                                                        @error('nama')
                                                                             <span class="invalid-feedback">{{ $message }}</span>
                                                                         @enderror
                                                                     </div>
@@ -70,7 +87,7 @@
                                                                         Simpan
                                                                     </button>
                                                                 </form>
-                                                                <form action="{{ route('formchecklist.destroy', $row->id) }}" method="POST" class="d-inline">
+                                                                <form action="{{ route('dealer.destroy', $row->id) }}" method="POST" class="d-inline float-left">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btn bg-danger-subtle text-danger">
@@ -105,23 +122,36 @@
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
                 <h4 class="modal-title" id="myModalLabel">
-                    Tambah Pertanyaan Baru
+                    Tambah Dealer Baru
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('formchecklist.store') }}" method="POST" class="floating-labels">
+            <form action="{{ route('dealer.store') }}" method="POST" class="floating-labels">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group mb-4">
                         <input
                             type="text"
-                            name="pertanyaan"
-                            class="form-control @error('pertanyaan') is-invalid @enderror"
-                            id="pertanyaan"
+                            name="kode"
+                            class="form-control @error('kode') is-invalid @enderror"
+                            id="kode"
                         />
                         <span class="bar"></span>
-                        <label for="pertanyaan">Masukkan pertanyaan</label>
-                        @error('pertanyaan')
+                        <label for="kode">Masukkan Kode Dealer</label>
+                        @error('kode')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-4">
+                        <input
+                            type="text"
+                            name="nama"
+                            class="form-control @error('nama') is-invalid @enderror"
+                            id="nama"
+                        />
+                        <span class="bar"></span>
+                        <label for="nama">Masukkan Nama Dealer</label>
+                        @error('nama')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>

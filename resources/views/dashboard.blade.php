@@ -40,7 +40,6 @@
         <!-- -------------------------------------------------------------- -->
         <!-- Row -->
         <div class="row">
-            <!-- Sales Overview -->
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
@@ -54,7 +53,7 @@
                                             Welcome
                                         </h4>
                                         <p class="card-subtitle">
-                                            Checklist System
+                                            Genba System
                                         </p>
                                     </div>
                                 </div>
@@ -63,6 +62,31 @@
                     </div>
                 </div>
             </div>
+            
+            @if (Auth::user()->role == "auditor")
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <div>
+                                        <h4 class="card-title">
+                                            Checklist Saya
+                                        </h4>
+                                        <p class="card-subtitle mt-3">
+                                            @foreach ($user_checklist as $row)
+                                            <span class="badge bg-dark-subtle px-3 py-2 text-light">{{ $row->nama }}</span>
+                                            @endforeach
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>

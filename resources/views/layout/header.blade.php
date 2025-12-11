@@ -105,30 +105,16 @@
                                     class="profile-pic rounded-circle round-30"
                                 />
                             </a>
-                            <div
-                                class="dropdown-menu pt-0 content-dd overflow-hidden pt-0 dropdown-menu-end user-dd"
-                                aria-labelledby="drop2"
-                            >
-                                <div
-                                    class="profile-dropdown position-relative"
-                                    data-simplebar
-                                >
+                            <div class="dropdown-menu pt-0 content-dd overflow-hidden pt-0 dropdown-menu-end user-dd" aria-labelledby="drop2">
+                                <div class="profile-dropdown position-relative" data-simplebar>
                                     <div class="py-3 border-bottom">
-                                        <div
-                                            class="d-flex align-items-center px-3"
-                                        >
-                                            <img
-                                                src="{{ asset('assets/images/profile/user-1.jpg') }}"
-                                                class="rounded-circle round-50"
-                                                alt=""
-                                            />
+                                        <div class="d-flex align-items-center px-3">
+                                            <img src="{{ asset('assets/images/profile/user-1.jpg') }}" class="rounded-circle round-50" alt=""/>
                                             <div class="ms-3">
                                                 <h5 class="mb-1 fs-4">
                                                     {{ Auth::user()->name }}
                                                 </h5>
-                                                <p
-                                                    class="mb-0 fs-2 d-flex align-items-center text-muted"
-                                                >
+                                                <p class="mb-0 fs-2 d-flex align-items-center text-muted">
                                                     {{ Auth::user()->email }}
                                                 </p>
                                             </div>
@@ -136,35 +122,13 @@
                                     </div>
                                     <div class="message-body pb-3">
                                         <div class="px-3">
-                                            <div
-                                                class="h6 mb-0 dropdown-item py-8 px-3 rounded-2 link"
-                                            >
-                                                <a
-                                                    href="../main/page-account-settings.html"
-                                                    class="d-flex align-items-center"
-                                                >
-                                                    <i
-                                                        class="ti ti-user me-2 fs-7"
-                                                    ></i>
-                                                    Akun Saya
+                                            <div class="h6 mb-0 dropdown-item py-8 px-3 rounded-2 link">
+                                                <a href="{{ route('profil.password') }}" class="d-flex align-items-center">
+                                                    <i class="ti ti-lock me-2 fs-7"></i>
+                                                    Ubah Password
                                                 </a>
                                             </div>
-                                            <div
-                                                class="h6 mb-0 dropdown-item py-8 px-3 rounded-2 link"
-                                            >
-                                                <a
-                                                    href="../main/page-account-settings.html"
-                                                    class="d-flex align-items-center"
-                                                >
-                                                    <i
-                                                        class="ti ti-settings me-2 fs-7"
-                                                    ></i>
-                                                    Pengaturan Akun
-                                                </a>
-                                            </div>
-                                            <div
-                                                class="h6 mb-0 dropdown-item py-8 px-3 rounded-2 link"
-                                            >
+                                            <div class="h6 mb-0 dropdown-item py-8 px-3 rounded-2 link">
                                             @if(Auth::check())
                                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                                     @csrf

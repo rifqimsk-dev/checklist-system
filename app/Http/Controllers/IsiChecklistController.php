@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dealer;
 use App\Models\FormChecklist;
 use App\Models\IsiChecklist;
+use App\Models\UserChecklist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,14 +20,16 @@ class IsiChecklistController extends Controller
 
         $bulan = $request->query('bulan');
         $dealer = $request->query('dealer');
+        $user_checklist_id = $request->query('user_checklist_id');
 
-        if (!$bulan || !$dealer) {
+        if (!$bulan || !$dealer || !$user_checklist_id) {
             return redirect()->route('isichecklist.create');
         }
 
         $query = IsiChecklist::where('user_id', auth()->id())
         ->where('bulan', $bulan)
-        ->where('dealer', $dealer);
+        ->where('dealer', $dealer)
+        ->where('user_checklist_id', $user_checklist_id);
 
         $exists = $query->exists();
 
@@ -39,8 +43,9 @@ class IsiChecklistController extends Controller
             session([
                 'bulan' => $bulan,
                 'dealer' => $dealer,
+                'user_checklist_id' => $user_checklist_id,
             ]);
-            $form_checklist = FormChecklist::where('user_id', Auth::id())->get();
+            $form_checklist = FormChecklist::where('user_checklist_id', $user_checklist_id)->get();
             return view('checklist.isi', compact('title','form_checklist'));
         }
 
@@ -52,7 +57,9 @@ class IsiChecklistController extends Controller
     public function create()
     {
         $title = 'Isi Checklist';
-        return view('checklist.formisi', compact('title'));
+        $user_checklist = UserChecklist::where('user_id', auth()->id())->get();
+        $dealer = Dealer::all();
+        return view('checklist.formisi', compact('title', 'user_checklist','dealer'));
     }
 
     /**
@@ -60,10 +67,11 @@ class IsiChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        $nama       = $request->nama;
-        $hondaID    = $request->hondaID;
-        $dealer    = session('dealer');
-        $bulan    = session('bulan');
+        $nama                   = $request->nama;
+        $hondaID                = $request->hondaID;
+        $dealer                 = session('dealer');
+        $bulan                  = session('bulan');
+        $user_checklist_id      = session('user_checklist_id');
 
         $pertanyaan = $request->pertanyaan;
         $indikator  = $request->indikator;
@@ -71,19 +79,23 @@ class IsiChecklistController extends Controller
 
         foreach ($pertanyaan as $index => $p) {
             IsiChecklist::create([
-                'user_id'       => auth()->id(),
-                'nama'          => $nama,
-                'hondaID'       => $hondaID,
-                'pertanyaan'    => $p,
-                'indikator'     => $indikator[$index],
-                'keterangan'    => $keterangan[$index],
-                'dealer'        => $dealer,
-                'bulan'        => $bulan,
+                'user_id'               => auth()->id(),
+                'nama'                  => $nama,
+                'hondaID'               => $hondaID,
+                'pertanyaan'            => $p,
+                'indikator'             => $indikator[$index],
+                'keterangan'            => $keterangan[$index],
+                'dealer'                => $dealer,
+                'bulan'                 => $bulan,
+                'user_checklist_id'     => $user_checklist_id,
             ]);
         }
 
-        return redirect()->route('isichecklist.index')
-            ->with('success', 'Checklist berhasil disimpan!');
+        return redirect()->route('hasilchecklist.view', [
+            'bulan' => $bulan,
+            'dealer' => $dealer,
+            'user_checklist_id' => $user_checklist_id
+        ]);
     }
 
     /**

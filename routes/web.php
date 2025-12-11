@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\AkunController;
+use Mews\Captcha\Facades\Captcha;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FormChecklistController;
 use App\Http\Controllers\HasilChecklist;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DealerController;
 use App\Http\Controllers\IsiChecklistController;
+use App\Http\Controllers\FormChecklistController;
 use App\Http\Controllers\UserChecklistController;
 
 /*
@@ -28,10 +31,10 @@ Route::resource('userchecklist', UserChecklistController::class)
 ->middleware('role:admin');
 
 Route::resource('formchecklist', FormChecklistController::class)
-->middleware('role:admin,auditor');
+->middleware('role:auditor');
 
 Route::resource('isichecklist', IsiChecklistController::class)
-->middleware('role:admin,auditor');
+->middleware('role:auditor');
 
 Route::get('/hasilchecklist', [HasilChecklist::class, 'index'])
 ->middleware('role:admin,auditor')
@@ -44,12 +47,30 @@ Route::get('/hasilchecklist/view', [HasilChecklist::class, 'view'])
 Route::resource('akun', AkunController::class)
 ->middleware('role:admin');
 
+Route::resource('dealer', DealerController::class)
+->middleware('role:admin');
+
+Route::get('/profil/password', [ProfilController::class, 'form_password'])
+->middleware('role:admin,auditor')
+->name('profil.password');
+
+Route::put('/profil/update', [ProfilController::class, 'update'])
+->middleware('role:admin,auditor')
+->name('profil.password.update');
+
 // AUTHENTICATION
 // ====================================================================
 Route::get('/login', [AuthController::class, 'loginForm']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // ====================================================================
+
+// ---------- CAPTCHA ----------
+Route::get('/reload-captcha', function () {
+    return response()->json([
+        'captcha' => Captcha::img()
+    ]);
+});
 
 // Documentation
 Route::get('/docs/form-step', function() {

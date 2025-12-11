@@ -16,6 +16,17 @@
                                 <div class="row">
                                     <div class="form-group mb-2 col-md-4">
                                         <div class="input-group">
+                                            <span class="input-group-text" id="user_checklist_id"><i class="ti ti-user"></i></span>
+                                            <select name="user_checklist_id" class="form-control">
+                                                <option value="" disabled selected>Pilih Checklist</option>
+                                                @foreach ($user_checklist as $row)
+                                                <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-2 col-md-3">
+                                        <div class="input-group">
                                             <span class="input-group-text" id="bulan"><i class="ti ti-calendar"></i></span>
                                             <select name="bulan" class="form-control">
                                                 <option value="01">Januari</option>
@@ -38,7 +49,9 @@
                                             <span class="input-group-text" id="dealer"><i class="ti ti-building"></i></span>
                                             <select name="dealer" class="form-control">
                                                 <option value="" disabled selected>Pilih Dealer</option>
-                                                <option value="MPS Pandeglang">MPS Pandeglang</option>
+                                                @foreach ($dealer as $row)
+                                                <option value="{{ $row->nama }}">{{ $row->nama }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

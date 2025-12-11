@@ -39,13 +39,13 @@
                         <div class="form-group col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text" id="bulan">Nama</span>
-                                <input type="text" name="nama" id="nama"  class="form-control" style="border:1px solid #e0e0e0">
+                                <input type="text" name="nama" id="nama" required class="form-control" style="border:1px solid #e0e0e0">
                             </div>
                         </div>
                         <div class="form-group col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text" id="bulan">Honda ID</span>
-                                <input type="text" name="hondaID" id="hondaID"  class="form-control" style="border:1px solid #e0e0e0">
+                                <input type="text" name="hondaID" id="hondaID" required class="form-control" style="border:1px solid #e0e0e0">
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <h5 class="mb-3 fw-semibold">{{ $row->pertanyaan }}</h5>
                         {{-- ALERT ERROR --}}
                         <div id="global-error" 
-                            class="alert customize-alert alert-dismissible rounded-pill alert-light-danger bg-danger-subtle text-danger fade show remove-close-icon"
+                            class="alert customize-alert alert-dismissible rounded-pill alert-light-danger bg-danger-subtle text-danger fade show remove-close-icon global-error alert ..."
                             role="alert"
                             style="display:none;"
                         >
@@ -144,15 +144,18 @@
     }
 
     function validateStep(stepIndex) {
-        let radios = steps[stepIndex].querySelectorAll("input[type='radio']");
+        let step = steps[stepIndex];
+        let radios = step.querySelectorAll("input[type='radio']");
+        let errorBox = step.querySelector(".global-error");
+
         let checked = [...radios].some(r => r.checked);
 
         if (!checked) {
-            document.getElementById("global-error").style.display = "block";
+            errorBox.style.display = "block";
             return false;
         }
 
-        document.getElementById("global-error").style.display = "none";
+        errorBox.style.display = "none";
         return true;
     }
 
@@ -186,7 +189,9 @@
     // Hide error on radio change
     document.querySelectorAll("input[type='radio']").forEach(r => {
         r.addEventListener("change", function() {
-            document.getElementById("global-error").style.display = "none";
+            const step = this.closest(".step");
+            const errorBox = step.querySelector(".global-error");
+            if (errorBox) errorBox.style.display = "none";
         });
     });
 </script>

@@ -18,7 +18,7 @@
                     ></iconify-icon>
                     <span class="hide-menu">Checklist</span>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item" id="get-url">
                     <a class="sidebar-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">
                         <iconify-icon
                             icon="solar:screencast-2-linear"
@@ -40,15 +40,26 @@
                 </li>
                 @endif
 
+                @if (Auth::user()->role == "auditor") 
+                <!-- ---------------------------------- -->
+                <!-- Form Checklist -->
+                <!-- ---------------------------------- -->
                 <li class="sidebar-item">
-                    <a class="sidebar-link {{ request()->is('formchecklist*') ? 'active' : '' }}" href="{{ route('formchecklist.index') }}">
-                        <iconify-icon
-                            icon="solar:file-text-linear"
-                            class="aside-icon"
-                        ></iconify-icon>
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <iconify-icon icon="solar:file-text-linear" class="aside-icon"></iconify-icon>
                         <span class="hide-menu">Form Checklist</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        @foreach ($user_checklist_main as $row)
+                        <li class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $row->nama }}">
+                            <a href="{{ route('formchecklist.index', ['id' => $row->id]) }}" class="sidebar-link sublink {{ $row->id == session('form_checklist_id') ? 'active' : '' }}">
+                                <span class="hide-menu ms-3">{{ $row->nama }}</span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
                 </li>
+
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ request()->is('isichecklist*') ? 'active' : '' }}" href="{{ route('isichecklist.create') }}">
                         <iconify-icon
@@ -58,6 +69,8 @@
                         <span class="hide-menu">Isi Checklist</span>
                     </a>
                 </li>
+                @endif
+
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ request()->is('hasilchecklist*') ? 'active' : '' }}" href="{{ route('hasilchecklist.index') }}">
                         <iconify-icon
@@ -85,7 +98,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="">
+                    <a class="sidebar-link {{ request()->is('dealer*') ? 'active' : '' }}" href="{{ route('dealer.index') }}">
                         <iconify-icon
                             icon="solar:file-linear"
                             class="aside-icon"

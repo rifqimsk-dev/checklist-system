@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FormChecklist extends Model
+class Dealer extends Model
 {
     use HasFactory;
 
-    protected $table = 'form_checklist';
-    protected $fillable = ['pertanyaan','user_id','user_checklist_id'];
+    protected $table = 'dealer';
+    protected $fillable = ['kode','nama'];
+
     public $timestamps = false;
 }
