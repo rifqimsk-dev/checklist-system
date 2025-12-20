@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\FormChecklist;
 use App\Models\UserChecklist;
-use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Facades\Auth;
 
 class FormChecklistController extends Controller
@@ -41,14 +42,14 @@ class FormChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'pertanyaan' => 'required|min:6'
+        $validated = $request->validate([
+            'pertanyaan' => 'required|string|min:6|max:1000'
         ]);
 
         FormChecklist::create([
-            'pertanyaan' => $request->pertanyaan,
+            'pertanyaan' => Purifier::clean($validated['pertanyaan']),
             'user_id' => Auth::id(),
-            'user_checklist_id' => session('form_checklist_id')
+            'user_checklist_id' => session()->get('form_checklist_id'),
         ]);
 
         return redirect()->route('formchecklist.index')->with('alert', [
@@ -80,15 +81,18 @@ class FormChecklistController extends Controller
     public function update(Request $request, string $id)
     {
         $form_checklist = FormChecklist::findOrFail($id);
-        $request->validate([
-            'pertanyaan' => 'required|min:6'
+
+        $validated = $request->validate([
+            'pertanyaan' => 'required|string|min:6|max:1000'
         ]);
 
-        $form_checklist->update($request->all());
+        $form_checklist->update([
+            'pertanyaan' => Purifier::clean($validated['pertanyaan'])
+        ]);
 
         return redirect()->route('formchecklist.index')->with('alert', [
             'title' => 'Berhasil!',
-            'message' => 'Data berhasil disimpan.',
+            'message' => 'Data berhasil diperbarui.',
             'type' => 'success'
         ]);
     }

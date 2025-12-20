@@ -49,6 +49,20 @@
                             <div class="form-group mb-4">
                                 <input
                                     type="text"
+                                    name="telepon"
+                                    value="{{ @old('telepon', $akun->telepon) }}"
+                                    class="form-control @error('telepon') is-invalid @enderror"
+                                    id="telepon"
+                                />
+                                <span class="bar"></span>
+                                <label for="telepon">No HP</label>
+                                @error('telepon')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-4">
+                                <input
+                                    type="text"
                                     name="password"
                                     class="form-control @error('password') is-invalid @enderror"
                                     id="password"
@@ -65,6 +79,18 @@
                                     <option value="" selected disabled>Role</option>
                                     <option {{ ($akun->role == 'admin') ? 'selected' : '' }} value="admin">Admin</option>
                                     <option {{ ($akun->role == 'auditor') ? 'selected' : '' }} value="auditor">Auditor</option>
+                                </select>
+                                <span class="bar"></span>
+                                @error('role')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-4">
+                                <select name="departemen_id" class="form-control @error('departemen_id') is-invalid @enderror" id="departemen_id">
+                                    <option value="" selected disabled>Departemen</option>
+                                    @foreach ($departemen as $row)
+                                    <option {{ $akun->departemen_id == $row->id ? 'selected' : '' }} value="{{ $row->id }}">{{ $row->nama }}</option>
+                                    @endforeach
                                 </select>
                                 <span class="bar"></span>
                                 @error('role')

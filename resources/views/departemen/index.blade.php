@@ -11,9 +11,9 @@
                     <!-- start Zero Configuration -->
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Data Dealer</h4>
+                            <h4 class="card-title">Data Departemen</h4>
                             <a href="" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-outline-danger rounded-2 mt-2">
-                                <i class="ti ti-plus"></i> Tambah Dealer
+                                <i class="ti ti-plus"></i> Tambah Departemen
                             </a>
                             <div class="table-responsive mt-3">
                                 <table
@@ -31,7 +31,7 @@
                                         <!-- end row -->
                                     </thead>
                                     <tbody>
-                                        @foreach ($dealer as $row)
+                                        @foreach ($departemen as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->kode }}</td>
@@ -44,11 +44,11 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex align-items-center">
                                                                 <h4 class="modal-title" id="myModalLabel">
-                                                                    Ubah Dealer
+                                                                    Ubah Departemen
                                                                 </h4>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form action="{{ route('dealer.update', $row->id) }}" method="POST" class="floating-labels">
+                                                            <form action="{{ route('departemen.update', $row->id) }}" method="POST" class="floating-labels">
                                                                 <div class="modal-body">
                                                                     @csrf
                                                                     @method('PUT')
@@ -61,7 +61,7 @@
                                                                             id="kode"
                                                                         />
                                                                         <span class="bar"></span>
-                                                                        <label for="nama">Masukkan Kode Dealer</label>
+                                                                        <label for="nama">Masukkan Kode Departemen</label>
                                                                         @error('kode')
                                                                             <span class="invalid-feedback">{{ $message }}</span>
                                                                         @enderror
@@ -75,7 +75,7 @@
                                                                             id="nama"
                                                                         />
                                                                         <span class="bar"></span>
-                                                                        <label for="nama">Masukkan Nama Dealer</label>
+                                                                        <label for="nama">Masukkan Nama Departemen</label>
                                                                         @error('nama')
                                                                             <span class="invalid-feedback">{{ $message }}</span>
                                                                         @enderror
@@ -87,7 +87,7 @@
                                                                         Simpan
                                                                     </button>
                                                                 </form>
-                                                                <form action="{{ route('dealer.destroy', $row->id) }}" method="POST" class="d-inline float-left">
+                                                                <form action="{{ route('departemen.destroy', $row->id) }}" method="POST" class="d-inline float-left">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btn bg-danger-subtle text-danger rounded-2">
@@ -122,11 +122,11 @@
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center">
                 <h4 class="modal-title" id="myModalLabel">
-                    Tambah Dealer Baru
+                    Tambah Departemen Baru
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('dealer.store') }}" method="POST" class="floating-labels">
+            <form action="{{ route('departemen.store') }}" method="POST" class="floating-labels">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group mb-4">
@@ -137,7 +137,7 @@
                             id="kode"
                         />
                         <span class="bar"></span>
-                        <label for="kode">Masukkan Kode Dealer</label>
+                        <label for="kode">Masukkan Kode Departemen</label>
                         @error('kode')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -150,7 +150,7 @@
                             id="nama"
                         />
                         <span class="bar"></span>
-                        <label for="nama">Masukkan Nama Dealer</label>
+                        <label for="nama">Masukkan Nama Departemen</label>
                         @error('nama')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

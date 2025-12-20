@@ -15,6 +15,10 @@
                             <a href="" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-outline-danger mt-2">
                                 <i class="ti ti-plus"></i> Tambah Pertanyaan
                             </a>
+
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
+
                             <div class="table-responsive mt-3">
                                 <table
                                     id="zero_config"
@@ -33,7 +37,7 @@
                                         @foreach ($form_checklist as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $row->pertanyaan }}</td>
+                                            <td>{!! $row->pertanyaan !!}</td>
                                             <td>
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#ubah{{ $row->id }}" class="btn btn-sm btn-dark rounded-circle"><i class="ti ti-search"></i></a>
 
@@ -50,19 +54,11 @@
                                                                 <div class="modal-body">
                                                                     @csrf
                                                                     @method('PUT')
-                                                                    <div class="form-group mb-4">
-                                                                        <input
-                                                                            type="text"
-                                                                            name="pertanyaan"
-                                                                            value="{{ @old('pertanyaan', $row->pertanyaan) }}"
-                                                                            class="form-control @error('pertanyaan') is-invalid @enderror"
-                                                                            id="pertanyaan"
-                                                                        />
-                                                                        <span class="bar"></span>
-                                                                        @error('pertanyaan')
-                                                                            <span class="invalid-feedback">{{ $message }}</span>
-                                                                        @enderror
-                                                                    </div>
+                                                                    <input id="content{{ $loop->iteration }}" type="hidden" name="pertanyaan">
+                                                                    <trix-editor input="content{{ $loop->iteration }}">{!! $row->pertanyaan !!}</trix-editor>
+                                                                    @error('pertanyaan')
+                                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                                    @enderror
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button class="btn btn-danger">
@@ -112,19 +108,11 @@
             <form action="{{ route('formchecklist.store') }}" method="POST" class="floating-labels">
                 <div class="modal-body">
                     @csrf
-                    <div class="form-group mb-4">
-                        <input
-                            type="text"
-                            name="pertanyaan"
-                            class="form-control @error('pertanyaan') is-invalid @enderror"
-                            id="pertanyaan"
-                        />
-                        <span class="bar"></span>
-                        <label for="pertanyaan">Masukkan pertanyaan</label>
-                        @error('pertanyaan')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <input id="content" type="hidden" name="pertanyaan">
+                    <trix-editor input="content"></trix-editor>
+                    @error('pertanyaan')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-danger" id="btn-save">

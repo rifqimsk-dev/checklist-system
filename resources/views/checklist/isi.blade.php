@@ -25,7 +25,7 @@
                 <div class="mb-4 text-center">
                     <h4>
                         <i class="ti ti-building"></i> 
-                        {{ session('dealer') }} - 
+                        {{ $dealer_name->nama }} - 
                         <i class="ti ti-calendar"></i> 
                         {{ \Carbon\Carbon::create()->month(session('bulan'))->locale('id')->translatedFormat('F') }}
                     </h4>
@@ -45,7 +45,7 @@
                         <div class="form-group col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text" id="bulan">Honda ID</span>
-                                <input type="text" name="hondaID" id="hondaID" required class="form-control" style="border:1px solid #e0e0e0">
+                                <input type="text" name="hondaID" id="hondaID" class="form-control" style="border:1px solid #e0e0e0">
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                     @foreach ($form_checklist as $row)
                     <div class="step @if($loop->first) active @endif">
                         
-                        <h5 class="mb-3 fw-semibold">{{ $row->pertanyaan }}</h5>
+                        <div class="mb-3">{!! $row->pertanyaan !!}</div>
                         {{-- ALERT ERROR --}}
                         <div id="global-error" 
                             class="alert customize-alert alert-dismissible rounded-pill alert-light-danger bg-danger-subtle text-danger fade show remove-close-icon global-error alert ..."

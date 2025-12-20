@@ -12,7 +12,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Manajemen Akun</h4>
-                            <a href="{{ route('akun.create') }}" class="btn btn-outline-danger mt-2">
+                            <a href="{{ route('akun.create') }}" class="btn btn-outline-danger rounded-2 mt-2">
                                 <i class="ti ti-plus"></i> Data Baru
                             </a>
                             <div class="table-responsive mt-3">
@@ -25,9 +25,9 @@
                                         <tr>
                                             <th>Nama</th>
                                             <th>Email</th>
+                                            <th>No HP</th>
                                             <th>Role</th>
-                                            <th>Created</th>
-                                            <th>Updated</th>
+                                            <th>Departemen</th>
                                             <th>Opsi</th>
                                         </tr>
                                         <!-- end row -->
@@ -37,9 +37,9 @@
                                         <tr>
                                             <td>{{ $row->name }}</td>
                                             <td>{{ $row->email }}</td>
+                                            <td>{{ $row->telepon }}</td>
                                             <td>{{ $row->role }}</td>
-                                            <td>{{ $row->created_at }}</td>
-                                            <td>{{ $row->updated_at }}</td>
+                                            <td>{{ $row->departemen->nama }}</td>
                                             <td>
                                                 <a href="{{ route('akun.edit', $row->id) }}" class="btn btn-sm btn-dark rounded-circle"><i class="ti ti-search"></i></a>
                                             </td>

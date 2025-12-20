@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departemen;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class AkunController extends Controller
     public function index()
     {
         $title = 'Manajemen Akun';
-        $akun = User::all();
+        $akun = User::with('departemen')->get();
         return view('akun.index', compact('title','akun'));
     }
 
@@ -24,7 +25,8 @@ class AkunController extends Controller
     public function create()
     {
         $title = 'Tambah Akun';
-        return view('akun.create', compact('title'));
+        $departemen = Departemen::all();
+        return view('akun.create', compact('title','departemen'));
     }
 
     /**
@@ -35,6 +37,8 @@ class AkunController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email:dns|unique:users,email',
+            'telepon' => 'required|numeric|unique:users,telepon',
+            'departemen_id' => 'required|numeric',
             'role' => 'required|in:admin,auditor',
             'password' => 'required|min:6',
         ]);
@@ -42,6 +46,8 @@ class AkunController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'telepon' => $request->telepon,
+            'departemen_id' => $request->departemen_id,
             'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
@@ -66,9 +72,10 @@ class AkunController extends Controller
      */
     public function edit(string $id)
     {
-        $akun = User::findOrFail($id);
         $title = 'Data Akun';
-        return view('akun.edit', compact('akun','title'));
+        $akun = User::findOrFail($id);
+        $departemen = Departemen::all();
+        return view('akun.edit', compact('akun','title','departemen'));
     }
 
     /**
@@ -80,6 +87,8 @@ class AkunController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email:dns|unique:users,email,'. $akun->id,
+            'telepon' => 'required|numeric|unique:users,telepon,'. $akun->id,
+            'departemen_id' => 'required|numeric',
             'role' => 'required|in:admin,auditor',
             'password' => 'nullable|min:6',
         ]);
@@ -87,6 +96,8 @@ class AkunController extends Controller
         $akun->update([
             'name' => $request->name,
             'email' => $request->email,
+            'telepon' => $request->telepon,
+            'departemen_id' => $request->departemen_id,
             'role' => $request->role,
         ]);
 
@@ -98,7 +109,7 @@ class AkunController extends Controller
 
         return redirect()->route('akun.index')->with('alert', [
             'title' => 'Berhasil!',
-            'message' => 'Data berhasil disimpan.',
+            'message' => 'Data berhasil diperbarui.',
             'type' => 'success'    
         ]);
     }

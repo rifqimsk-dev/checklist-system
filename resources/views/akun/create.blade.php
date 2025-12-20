@@ -48,6 +48,20 @@
                             <div class="form-group mb-4">
                                 <input
                                     type="text"
+                                    name="telepon"
+                                    value="{{ @old('telepon') }}"
+                                    class="form-control @error('telepon') is-invalid @enderror"
+                                    id="telepon"
+                                />
+                                <span class="bar"></span>
+                                <label for="telepon">No HP</label>
+                                @error('telepon')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-4">
+                                <input
+                                    type="text"
                                     name="password"
                                     class="form-control @error('password') is-invalid @enderror"
                                     id="password"
@@ -69,11 +83,23 @@
                                     <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="form-group mb-4">
+                                <select name="departemen_id" class="form-control @error('departemen_id') is-invalid @enderror" id="departemen_id">
+                                    <option value="" selected disabled>Departemen</option>
+                                    @foreach ($departemen as $row)
+                                    <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="bar"></span>
+                                @error('role')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn btn-danger rounded-2">
                                     <i class="ti ti-send me-2"></i>Simpan
                                 </button>
-                                <button type="reset" class="btn btn-light">
+                                <button type="reset" class="btn btn-light rounded-2">
                                     <i class="ti ti-arrow-back-up fs-4 me-2"></i
                                     >Batal
                                 </button>

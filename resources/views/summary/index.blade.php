@@ -11,23 +11,14 @@
                     <!-- start Zero Configuration -->
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Hasil Checklist</h4>
-                            <form action="{{ route('hasilchecklist.view') }}" method="get">
+                            <h4 class="card-title">Summary</h4>
+                            <b><i class="ti ti-user"></i> {{ $user_checklist->nama }}</b>
+                            <form action="{{ route('summary.view') }}" method="get" class="mt-4">
                                 <div class="row">
-                                    <div class="form-group mb-2 col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="user_checklist_id"><i class="ti ti-user"></i></span>
-                                            <select name="user_checklist_id" class="form-control">
-                                                <option value="" disabled selected>Pilih Checklist</option>
-                                                @foreach ($user_checklist as $row)
-                                                <option value="{{ $row->id }}">{{ $row->nama }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="form-group mb-2 col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-text" id="bulan"><i class="ti ti-calendar"></i></span>
+                                            <input type="hidden" name="id" value="{{ $user_checklist->id }}">
                                             <select name="bulan" class="form-control">
                                                 <option value="01">Januari</option>
                                                 <option value="02">Februari</option>
@@ -46,7 +37,7 @@
                                     </div>
                                     <div class="form-group mb-2 col-md-4">
                                         <div class="input-group">
-                                            <span class="input-group-text" id="dealer_id"><i class="ti ti-building"></i></span>
+                                            <span class="input-group-text" id="dealer"><i class="ti ti-building"></i></span>
                                             <select name="dealer_id" class="form-control">
                                                 <option value="" disabled selected>Pilih Dealer</option>
                                                 @foreach ($dealer as $row)
@@ -62,6 +53,7 @@
                             </form>
                         </div>
                     </div>
+                    <!-- end Zero Configuration -->
                 </div>
             </div>
         </div>

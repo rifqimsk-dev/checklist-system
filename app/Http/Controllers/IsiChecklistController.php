@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dealer;
-use App\Models\FormChecklist;
 use App\Models\IsiChecklist;
-use App\Models\UserChecklist;
 use Illuminate\Http\Request;
+use App\Models\FormChecklist;
+use App\Models\UserChecklist;
+use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Facades\Auth;
 
 class IsiChecklistController extends Controller
@@ -19,17 +20,19 @@ class IsiChecklistController extends Controller
         $title = 'Isi Checklist';
 
         $bulan = $request->query('bulan');
-        $dealer = $request->query('dealer');
+        $dealer_id = $request->query('dealer_id');
         $user_checklist_id = $request->query('user_checklist_id');
 
-        if (!$bulan || !$dealer || !$user_checklist_id) {
+        if (!$bulan || !$dealer_id || !$user_checklist_id) {
             return redirect()->route('isichecklist.create');
         }
 
         $query = IsiChecklist::where('user_id', auth()->id())
         ->where('bulan', $bulan)
-        ->where('dealer', $dealer)
+        ->where('dealer_id', $dealer_id)
         ->where('user_checklist_id', $user_checklist_id);
+
+        $dealer_name = Dealer::select('nama')->find($dealer_id);
 
         $exists = $query->exists();
 
@@ -42,11 +45,11 @@ class IsiChecklistController extends Controller
         } else {
             session([
                 'bulan' => $bulan,
-                'dealer' => $dealer,
+                'dealer_id' => $dealer_id,
                 'user_checklist_id' => $user_checklist_id,
             ]);
             $form_checklist = FormChecklist::where('user_checklist_id', $user_checklist_id)->get();
-            return view('checklist.isi', compact('title','form_checklist'));
+            return view('checklist.isi', compact('title','form_checklist','dealer_name'));
         }
 
     }
@@ -69,7 +72,7 @@ class IsiChecklistController extends Controller
     {
         $nama                   = $request->nama;
         $hondaID                = $request->hondaID;
-        $dealer                 = session('dealer');
+        $dealer_id              = session('dealer_id');
         $bulan                  = session('bulan');
         $user_checklist_id      = session('user_checklist_id');
 
@@ -82,10 +85,10 @@ class IsiChecklistController extends Controller
                 'user_id'               => auth()->id(),
                 'nama'                  => $nama,
                 'hondaID'               => $hondaID,
-                'pertanyaan'            => $p,
+                'pertanyaan'            => Purifier::clean($p),
                 'indikator'             => $indikator[$index],
                 'keterangan'            => $keterangan[$index],
-                'dealer'                => $dealer,
+                'dealer_id'                => $dealer_id,
                 'bulan'                 => $bulan,
                 'user_checklist_id'     => $user_checklist_id,
             ]);
@@ -93,7 +96,7 @@ class IsiChecklistController extends Controller
 
         return redirect()->route('hasilchecklist.view', [
             'bulan' => $bulan,
-            'dealer' => $dealer,
+            'dealer_id' => $dealer_id,
             'user_checklist_id' => $user_checklist_id
         ]);
     }

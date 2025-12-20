@@ -8,8 +8,10 @@ use App\Http\Controllers\HasilChecklist;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\IsiChecklistController;
 use App\Http\Controllers\FormChecklistController;
+use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\UserChecklistController;
 
 /*
@@ -44,10 +46,38 @@ Route::get('/hasilchecklist/view', [HasilChecklist::class, 'view'])
 ->middleware('role:admin,auditor')
 ->name('hasilchecklist.view');
 
+
+// SUMMARY
+// =================================================================
+Route::get('/summary', [SummaryController::class, 'index'])
+->middleware('role:admin,auditor')
+->name('summary.index');
+
+Route::get('/summary/view', [SummaryController::class, 'view'])
+->middleware('role:admin,auditor')
+->name('summary.view');
+
+Route::post('/summary/store', [SummaryController::class, 'store'])
+->middleware('role:admin,auditor')
+->name('summary.store');
+
+Route::get('/summary/{user_checklist_id}/{dealer_id}/{bulan}', [SummaryController::class, 'edit'])
+->middleware('role:admin,auditor')
+->name('summary.edit');
+
+Route::put('/summary/{user_checklist_id}/{dealer_id}/{bulan}', [SummaryController::class, 'update'])
+->middleware('role:admin,auditor')
+->name('summary.update');
+// =================================================================
+
+
 Route::resource('akun', AkunController::class)
 ->middleware('role:admin');
 
 Route::resource('dealer', DealerController::class)
+->middleware('role:admin');
+
+Route::resource('departemen', DepartemenController::class)
 ->middleware('role:admin');
 
 Route::get('/profil/password', [ProfilController::class, 'form_password'])

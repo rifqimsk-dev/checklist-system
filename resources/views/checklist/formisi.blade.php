@@ -47,10 +47,10 @@
                                     <div class="form-group mb-2 col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-text" id="dealer"><i class="ti ti-building"></i></span>
-                                            <select name="dealer" class="form-control">
+                                            <select name="dealer_id" class="form-control">
                                                 <option value="" disabled selected>Pilih Dealer</option>
                                                 @foreach ($dealer as $row)
-                                                <option value="{{ $row->nama }}">{{ $row->nama }}</option>
+                                                <option value="{{ $row->id }}">{{ $row->nama }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

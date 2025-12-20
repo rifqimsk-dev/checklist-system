@@ -76,7 +76,7 @@
                                         </h4>
                                         <p class="card-subtitle mt-3">
                                             @foreach ($user_checklist as $row)
-                                            <span class="badge bg-dark-subtle px-3 py-2 text-light">{{ $row->nama }}</span>
+                                            <span class="badge bg-light-subtle px-3 py-2 rounded-2 text-dark">{{ $row->nama }}</span>
                                             @endforeach
                                         </p>
                                     </div>

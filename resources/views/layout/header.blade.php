@@ -1,5 +1,5 @@
 <!--  Header Start -->
-<header class="topbar rounded-0 border-0 bg-danger">
+<header class="topbar bg-danger">
     <div class="with-vertical">
         <!-- ---------------------------------- -->
         <!-- Start Vertical Layout Header -->
@@ -10,18 +10,10 @@
                     class="brand-logo d-flex align-items-center justify-content-between"
                 >
                     <a
-                        href="../main/index.html"
-                        class="text-nowrap logo-img d-flex align-items-center gap-2"
+                        href="{{ url('/') }}"
+                        class="text-nowrap logo-img d-flex align-items-center gap-2 text-white"
                     >
-                        <b class="logo-icon">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Light Logo icon -->
-                            <img
-                                src="{{ asset('assets/images/logos/kemakmuran.webp') }}"
-                                alt="homepage"
-                                style="height: 40px"
-                            />
-                        </b>
+                        <b class="logo-icon">GENBA </b>v1.0
                         <!--End Logo icon -->
                     </a>
                 </div>

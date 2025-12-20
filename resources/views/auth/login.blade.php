@@ -122,11 +122,7 @@
                                             @error('captcha') <small class="text-danger">Kode captcha tidak sesuai</small> @enderror
                                         </div>
 
-                                        <button type="submit"
-                                            class="btn btn-danger w-100 py-8 mb-4"
-                                            ><i class="ti ti-key fs-5 me-2"></i>
-                                            Login
-                                        </button>
+                                        <button type="submit" id="btn-login" class="btn btn-danger rounded-2 w-100 py-8 mb-4">Login</button>
                                     </form>
                                 </div>
                             </div>
@@ -146,19 +142,18 @@
                 </div>
 
                 <script>
-                    function handleColorTheme(e) {
-                        document.documentElement.setAttribute(
-                            "data-color-theme",
-                            e
-                        );
-                    }
-
                     document.getElementById('reload').addEventListener('click', function () {
                         fetch('/reload-captcha')
                             .then(res => res.json())
                             .then(data => {
                                 document.querySelector('.captcha span').innerHTML = data.captcha;
                             });
+                    });
+
+                    document.getElementById('btn-login').addEventListener('click', function() {
+                        this.disabled = true;
+                        this.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Sedang verifikasi...'; // opsional
+                        this.closest('form').submit();
                     });
                 </script>
             </div>

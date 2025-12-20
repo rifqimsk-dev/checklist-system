@@ -52,11 +52,11 @@
                                     </div>
                                     <div class="form-group mb-2 col-md-4">
                                         <div class="input-group">
-                                            <span class="input-group-text" id="dealer"><i class="ti ti-building"></i></span>
-                                            <select name="dealer" class="form-control">
+                                            <span class="input-group-text" id="dealer_id"><i class="ti ti-building"></i></span>
+                                            <select name="dealer_id" class="form-control">
                                                 <option value="" disabled selected>Pilih Dealer</option>
                                                 @foreach ($dealer as $row)
-                                                <option value="{{ $row->nama }}">{{ $row->nama }}</option>
+                                                <option value="{{ $row->id }}">{{ $row->nama }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -73,7 +73,12 @@
                             @if ($hasil->isNotEmpty())
                             <b>
                                 <span class="ti ti-calendar"></span> {{ \Carbon\Carbon::create()->month($hasil->first()->bulan)->locale('id')->translatedFormat('F') }} <br>
-                                <span class="ti ti-building"></span> {{ $hasil->first()->dealer }} <br>
+                                <span class="ti ti-building"></span>  
+                                @php $row = $hasil->first() @endphp
+
+                                {{ $row?->dealer?->nama ?? '-' }}
+
+                                <br>
                                 <span class="ti ti-user"></span> {{ $user_checklist_one->nama }} <br>
                             </b>
                             <div class="table-responsive mt-3">
@@ -103,7 +108,7 @@
                                         @foreach ($hasil as $row)
                                         <tr>
                                             <td class="align-middle text-center">{{ $loop->iteration }}</td>
-                                            <td class="align-middle">{{ $row->pertanyaan }}</td>
+                                            <td class="align-middle">{!! $row->pertanyaan !!}</td>
                                             <td class="align-middle text-center">
                                                 @if ($row->indikator === 1)
                                                     <i class="ti ti-check bg-success text-white p-1 rounded-1"></i>
