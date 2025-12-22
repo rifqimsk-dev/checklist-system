@@ -12,7 +12,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Form Checklist - {{ $user_checklist->nama }}</h4>
-                            <a href="" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-outline-danger mt-2">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#tambah" class="btn btn-outline-danger rounded-2 mt-2">
                                 <i class="ti ti-plus"></i> Tambah Pertanyaan
                             </a>
 
@@ -22,7 +22,7 @@
                             <div class="table-responsive mt-3">
                                 <table
                                     id="zero_config"
-                                    class="table text-nowrap table-hover align-middle"
+                                    class="table table-hover align-middle"
                                 >
                                     <thead>
                                         <!-- start row -->
@@ -39,7 +39,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{!! $row->pertanyaan !!}</td>
                                             <td>
-                                                <a href="" data-bs-toggle="modal" data-bs-target="#ubah{{ $row->id }}" class="btn btn-sm btn-dark rounded-circle"><i class="ti ti-search"></i></a>
+                                                <a href="" data-bs-toggle="modal" data-bs-target="#ubah{{ $row->id }}" class="btn btn-sm btn-light rounded-circle"><i class="ti ti-search"></i></a>
 
                                                 <div class="modal fade" id="ubah{{ $row->id }}" tabindex="-1" aria-labelledby="ubah" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg">
@@ -61,7 +61,7 @@
                                                                     @enderror
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button class="btn btn-danger">
+                                                                    <button class="btn btn-danger rounded-2">
                                                                         <i class="ti ti-check"></i> 
                                                                         Simpan
                                                                     </button>
@@ -69,7 +69,7 @@
                                                                 <form action="{{ route('formchecklist.destroy', $row->id) }}" method="POST" class="d-inline">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btn bg-danger-subtle text-danger">
+                                                                    <button class="btn bg-danger-subtle rounded-2 text-danger">
                                                                         <i class="ti ti-trash"></i> 
                                                                         Hapus
                                                                     </button>
@@ -115,7 +115,7 @@
                     @enderror
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger" id="btn-save">
+                    <button class="btn btn-danger rounded-2" id="btn-save">
                         <i class="ti ti-check"></i> 
                         Simpan
                     </button>

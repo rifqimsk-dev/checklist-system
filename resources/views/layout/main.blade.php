@@ -22,7 +22,7 @@
         <!-- Core Css -->
         <link
             rel="stylesheet"
-            href="{{ asset('assets/css/styles.css?v=1.6') }}"
+            href="{{ asset('assets/css/styles.css?v=1.8') }}"
         />
         <!-- Datatable -->
         <link
