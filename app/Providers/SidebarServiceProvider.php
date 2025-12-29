@@ -21,7 +21,7 @@ class SidebarServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer('layout.sidebar', function ($view) {
-            $user_checklist_main = UserChecklist::where('user_id', auth()->id())->get();
+            $user_checklist_main = UserChecklist::select('id','nama','user_id')->get();
             $view->with('user_checklist_main', $user_checklist_main);
         });
     }

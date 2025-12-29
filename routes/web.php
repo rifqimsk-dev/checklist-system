@@ -33,7 +33,7 @@ Route::resource('userchecklist', UserChecklistController::class)
 ->middleware('role:admin');
 
 Route::resource('formchecklist', FormChecklistController::class)
-->middleware('role:auditor');
+->middleware('role:admin');
 
 Route::resource('isichecklist', IsiChecklistController::class)
 ->middleware('role:auditor');

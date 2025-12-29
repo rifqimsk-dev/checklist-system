@@ -74,7 +74,7 @@
         <script src="{{ asset('assets/js/theme/feather.min.js') }}"></script>
         <!-- solar icons -->
         <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-        <script src="{{ asset('assets/js/dashboards/dashboard1.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/dashboards/dashboard1.js') }}"></script> --}}
         <!-- Datatable -->
         <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('assets/js/datatable/datatable-basic.init.js') }}"></script>

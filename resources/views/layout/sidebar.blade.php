@@ -40,7 +40,7 @@
                 </li>
                 @endif
 
-                @if (Auth::user()->role == "auditor") 
+                @if (Auth::user()->role == "admin") 
                 <!-- ---------------------------------- -->
                 <!-- Form Checklist -->
                 <!-- ---------------------------------- -->
@@ -52,14 +52,17 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         @foreach ($user_checklist_main as $row)
                         <li class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $row->nama }}">
-                            <a href="{{ route('formchecklist.index', ['id' => $row->id]) }}" class="sidebar-link sublink {{ $row->id == session('form_checklist_id') ? 'active' : '' }}">
+                            <a href="{{ route('formchecklist.index', ['id' => $row->id, 'user' => $row->user_id]) }}" class="sidebar-link sublink {{ $row->id == session('form_checklist_id') ? 'active' : '' }}">
                                 <span class="hide-menu ms-3">{{ $row->nama }}</span>
                             </a>
                         </li>
                         @endforeach
                     </ul>
                 </li>
+                @endif
 
+                @if (Auth::user()->role == "auditor") 
+                {{-- ISI CHECKLIST --}}
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ request()->is('isichecklist*') ? 'active' : '' }} rounded-2" href="{{ route('isichecklist.create') }}">
                         <iconify-icon

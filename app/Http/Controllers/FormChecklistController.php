@@ -16,13 +16,16 @@ class FormChecklistController extends Controller
     public function index(Request $request)
     {
         $title = 'Form Checklist';
-        if ($request->id) {
-            session(['form_checklist_id' => $request->id]);
+        if ($request->id && $request->user) {
+            session([
+                'form_checklist_id' => $request->id,
+                'user_id' => $request->user
+            ]);
             return redirect()->route('formchecklist.index');
         }
 
-        $user_checklist = UserChecklist::find(session('form_checklist_id'));
-        $form_checklist = FormChecklist::where('user_id', Auth::id())
+        $user_checklist = UserChecklist::find(session()->get('form_checklist_id'));
+        $form_checklist = FormChecklist::where('user_id', session()->get('user_id'))
         ->where('user_checklist_id', session('form_checklist_id'))
         ->get();
 
@@ -48,7 +51,7 @@ class FormChecklistController extends Controller
 
         FormChecklist::create([
             'pertanyaan' => Purifier::clean($validated['pertanyaan']),
-            'user_id' => Auth::id(),
+            'user_id' => session()->get('user_id'),
             'user_checklist_id' => session()->get('form_checklist_id'),
         ]);
 
